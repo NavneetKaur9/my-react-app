@@ -1,13 +1,16 @@
-import React from 'react';
 import * as classNames from 'classnames';
+import React from 'react';
+import { UserDetail } from './UserDetail';
 
 export class User extends React.Component {
+
     constructor(props) {
         super(props);
-        this.state = {
-            apiUserData: []
-        }
 
+        this.state = {
+            apiUserData: [],
+            userDetail: {}
+        }
     }
 
     componentDidMount() {
@@ -29,16 +32,22 @@ export class User extends React.Component {
             })
     }
 
+    showUserDetail = (user) => {
+        this.setState({
+            userDetail: user
+        })
+    }
+
     render() {
         let displayUsers = this.state.apiUserData.map(user => {
 
             return (
                 <div
-                    key={user.id} 
+                    key={user.id}
                     className={classNames("user user-card", {
-                        'selected': user.id === (this.state.showUserDetailOf && this.state.showUserDetailOf.id)
-                    })} 
-                    onClick={() => this.props.onClickShowUserDetail(user)
+                        'selected': user.id === (this.state.userDetail && this.state.userDetail.id)
+                    })}
+                    onClick={() => this.showUserDetail(user)
                 }>
                     <div className="user user-card-name" >{user.name} ({user.username})</div>
                     <div className="user user-card-email">{user.email}</div>
@@ -51,6 +60,7 @@ export class User extends React.Component {
         return (
             <div className="App-container">
                 {displayUsers}
+                <UserDetail showUserDetailOf={this.state.userDetail} />
             </div>
         );
     }
