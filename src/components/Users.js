@@ -9,7 +9,7 @@ export class User extends React.Component {
 
         this.state = {
             apiUserData: [],
-            userDetail: {}
+            userDetail: null
         }
     }
 
@@ -60,7 +60,9 @@ export class User extends React.Component {
         return (
             <div className="App-container">
                 {displayUsers}
-                <UserDetail showUserDetailOf={this.state.userDetail} />
+                {this.state.userDetail && (
+                    <UserDetail showUserDetailOf={this.state.userDetail} />
+                )}
             </div>
         );
     }
