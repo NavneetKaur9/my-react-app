@@ -1,10 +1,11 @@
 import * as classNames from 'classnames';
 import React from 'react';
 import { UserDetail } from './UserDetail';
+import Card from 'react-bootstrap/Card';
 
 export class User extends React.Component {
 
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         this.state = {
@@ -42,19 +43,24 @@ export class User extends React.Component {
         let displayUsers = this.state.apiUserData.map(user => {
 
             return (
-                <div
+
+                <Card
                     key={user.id}
                     className={classNames("user user-card", {
                         'selected': user.id === (this.state.userDetail && this.state.userDetail.id)
                     })}
-                    onClick={() => this.showUserDetail(user)
-                }>
-                    <div className="user user-card-name" >{user.name} ({user.username})</div>
-                    <div className="user user-card-email">{user.email}</div>
-                    <div className="user user-card-phone">{user.phone}</div>
-                    <div className="user user-card-website">{user.website}</div>
+                    onClick={() => this.showUserDetail(user)}>
+                    <Card.Body>
+                        <Card.Title className="user-card-name">{user.name} ({user.username})</Card.Title>
+                        <Card.Subtitle className="mb-2 user-card-email">{user.email}</Card.Subtitle>
+                        <Card.Text>
+                            {user.phone}
+                        </Card.Text>
+                        <Card.Link className="user-card-website" href={user.website}>{user.website}</Card.Link>
+                    </Card.Body>
                     <div className="arrow"></div>
-                </div>);
+                </Card>
+            );
         });
 
         return (

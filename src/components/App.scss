@@ -8,12 +8,16 @@ $white: #ffffff;
 
   .App-container{
     padding:20px;
-   
+    position: relative;
+    
+    .card{
+      background-color:$background-color;
+    }
+    
     .user-card{
       border: 2px solid $white;
       margin: 15px;
-      padding: 15px;
-      width:calc(100% - 550px);
+      width:calc(100% - 500px);
       position: relative;
 
       &:hover{
@@ -42,10 +46,10 @@ $white: #ffffff;
 
       .arrow{
         position: absolute;
-        right: -110px;
+        right: -164px;
         top: -2px;
         bottom: 0;
-        border: 54px solid $white;
+        border: 82px solid $white;
         border-top-color: transparent;
         border-bottom-color: transparent;
         border-right-color: transparent;
@@ -53,14 +57,14 @@ $white: #ffffff;
     }
 
     .sidebar{
-      position: fixed;
+      position: absolute;
       top:0;
       right:0;
       height:100%;
       background-color: $background-selected-color;
       width:400px;
       padding: 20px;
-      
+
       .address-wrapper, .company-wrapper {
         padding-left: 60px;
       }
