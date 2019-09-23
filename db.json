@@ -1,11 +1,3 @@
 {
-  "posts": [
-    {
-      "id": 1,
-      "title": "hello DB"
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  "data":"data COntent"
 }
