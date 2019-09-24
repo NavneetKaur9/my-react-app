@@ -2,52 +2,31 @@ import * as classNames from 'classnames';
 import React from 'react';
 import { UserDetail } from './UserDetail';
 import Card from 'react-bootstrap/Card';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as UsersActions from '../actions/usersActions';
+import PropTypes from 'prop-types';
 
-export class User extends React.Component {
-
-    constructor (props) {
-        super(props);
-
-        this.state = {
-            apiUserData: [],
-            userDetail: null
-        }
-    }
+class User extends React.Component {
 
     componentDidMount() {
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(response => {
-
-                if (response.status !== 200) {
-                    return;
-                }
-
-                response.json().then(responseBody => {
-                    this.setState({
-                        apiUserData: responseBody
-                    });
-                });
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        this.props.userActions.fetchUsers();
     }
 
     showUserDetail = (user) => {
-        this.setState({
-            userDetail: user
-        })
+        this.props.userActions.setUserDetail(user);
     }
 
     render() {
-        let displayUsers = this.state.apiUserData.map(user => {
+        console.log(this.props);
+        let displayUsers = this.props.apiUserData.map(user => {
 
             return (
 
                 <Card
                     key={user.id}
                     className={classNames("user user-card", {
-                        'selected': user.id === (this.state.userDetail && this.state.userDetail.id)
+                        'selected': user.id === (this.props.userDetail && this.props.userDetail.id)
                     })}
                     onClick={() => this.showUserDetail(user)}>
                     <Card.Body>
@@ -66,10 +45,40 @@ export class User extends React.Component {
         return (
             <div className="App-container">
                 {displayUsers}
-                {this.state.userDetail && (
-                    <UserDetail showUserDetailOf={this.state.userDetail} />
+                {this.props.userDetail && (
+                    <UserDetail showUserDetailOf={this.props.userDetail} />
                 )}
             </div>
         );
     }
 }
+
+User.propTypes = {
+    userActions: PropTypes.object,
+    apiUserData: PropTypes.array,
+    userDetail: PropTypes.object
+};
+
+function mapStateToProps(state) {
+    console.log("NNNNNN", state);
+    return {
+        apiUserData: state.usersReducer.apiUserData,
+        userDetail: state.usersReducer.userDetail
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        userActions: bindActionCreators(UsersActions, dispatch)
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(User);
+
+/*
+    mapStateToProps will hydrate the props of your component from the state of the application.
+    mapDispatchToProps ensures our actions have access to dispatch from redux.
+*/
