@@ -62,8 +62,8 @@ User.propTypes = {
 function mapStateToProps(state) {
     console.log("NNNNNN", state);
     return {
-        apiUserData: state.usersReducer.apiUserData,
-        userDetail: state.usersReducer.userDetail
+        apiUserData: state.users.apiUserData,
+        userDetail: state.users.userDetail
     }
 }
 
