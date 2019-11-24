@@ -60,7 +60,6 @@ User.propTypes = {
 };
 
 function mapStateToProps(state) {
-    console.log("NNNNNN", state);
     return {
         apiUserData: state.users.apiUserData,
         userDetail: state.users.userDetail
@@ -77,8 +76,3 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(User);
-
-/*
-    mapStateToProps will hydrate the props of your component from the state of the application.
-    mapDispatchToProps ensures our actions have access to dispatch from redux.
-*/
