@@ -2,7 +2,7 @@ import * as classNames from 'classnames';
 import React from 'react';
 import { UserDetail } from './UserDetail';
 
-export class User extends React.Component {
+export class Users extends React.Component {
 
     constructor(props) {
         super(props);

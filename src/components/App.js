@@ -1,5 +1,5 @@
 import React from 'react';
-import { User } from './Users';
+import { Link } from "react-router-dom";
 import './App.scss';
 
 class App extends React.Component {
@@ -7,7 +7,15 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <User />
+                This is app Component
+               <ul>
+                    <li>
+                        <Link to="/users">User</Link>
+                    </li>
+                    <li>
+                        <Link to="/products">Products</Link>
+                    </li>
+                </ul>
             </div>
         );
     }
