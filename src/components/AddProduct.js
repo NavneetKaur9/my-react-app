@@ -9,12 +9,16 @@ export default class AddProduct extends React.Component {
         this.priceInput.value = '';
     }
 
+    nameRef = (inputRef)=>{
+        return this.nameInput = inputRef;
+    }
+
     render() {
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
                     <h4> Add Product</h4>
-                    <input placeholder="Name" ref={inputRef => this.nameInput = inputRef} />
+                    <input placeholder="Name" ref={this.nameRef} />
                     <input placeholder="Price" ref={inputRef => this.priceInput = inputRef} />
                     <button>Add</button>
                 </form>

@@ -14,7 +14,7 @@ let products = [{
 localStorage.setItem('products', JSON.stringify(products));
 
 class App extends React.Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -22,7 +22,7 @@ class App extends React.Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         let products = this.getProducts();
         this.setState({ products });
     }
@@ -42,13 +42,29 @@ class App extends React.Component {
         })
     }
 
-    addItem = (name, price) => {
+    onAdd = (name, price) => {
         console.log(name, price);
         let products = this.getProducts();
         products.push({ name, price });
         this.setState({
             products
         });
+    }
+
+    onEdit = (editedName, editedPrice, originalName) => {
+         let products = this.getProducts();
+        products = products.map(product => {
+            if (product.name === originalName) {
+                product.name = editedName;
+                product.price = editedPrice;
+            }
+
+            return product;
+        });
+
+        this.setState({
+            products
+        })
     }
 
     render() {
@@ -59,6 +75,7 @@ class App extends React.Component {
                         name={product.name}
                         price={product.price}
                         onDelete={this.onDelete}
+                        onEditSubmit={this.onEdit}
                     />
                 </div>
             )
@@ -68,7 +85,7 @@ class App extends React.Component {
             <div className="App">
                 <h1>Products Manager</h1>
                 <br />
-                <AddProduct onAddProduct={this.addItem} />
+                <AddProduct onAddProduct={this.onAdd} />
                 <hr />
                 {displayProducts}
             </div>
