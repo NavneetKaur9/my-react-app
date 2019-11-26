@@ -5,13 +5,13 @@ export class UserDetail extends React.Component {
     displayChildKeys = (data) => {
         let dataKeys = !data ? [] : Object.keys(data);
 
-        return dataKeys.map(key => {
+        return dataKeys.map((key,index) => {
 
             if (typeof data[key] == "object") {
                 return this.displayChildKeys(data[key]);
             } else {
                 return (
-                    <div >
+                    <div key={index}>
                         <b>{key}-</b> <span>{(data[key])}</span>
                     </div>
                 )
