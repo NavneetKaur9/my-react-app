@@ -1,6 +1,10 @@
 import React from "react";
+import { connect } from 'react-redux';
 
-export class UserDetail extends React.Component {
+import { bindActionCreators } from 'redux';
+import * as UsersActions from '../actions/usersActions';
+
+class UserDetail extends React.Component {
 
     displayChildKeys = (data) => {
         let dataKeys = !data ? [] : Object.keys(data);
@@ -21,10 +25,13 @@ export class UserDetail extends React.Component {
     }
 
     render() {
+        console.log("props inside userdetail page",this.props);
+
         return (
             <div>
                 <div className="sidebar">
-                    Name : {this.props.showUserDetailOf.name}
+                    user detail page 
+                    {/* Name : {this.props.showUserDetailOf.name}
                     <br />
                     UserName : {this.props.showUserDetailOf.username}
                     <br />
@@ -40,9 +47,26 @@ export class UserDetail extends React.Component {
                     <br />
                     Company:<div className="company-wrapper">
                         {this.displayChildKeys(this.props.showUserDetailOf.company)}
-                    </div>
+                    </div> */}
                 </div>
             </div>
         )
     }
 }
+
+function mapStateToProps (state){
+    return{
+        userData: state.users.apiUserData
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        userActions: bindActionCreators(UsersActions, dispatch)
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(UserDetail);
