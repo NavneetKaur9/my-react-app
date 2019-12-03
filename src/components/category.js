@@ -4,8 +4,7 @@ import { Link, Route } from "react-router-dom";
 class Category extends React.Component {
 
     render() {
-        console.log(this.props);
-        let match = this.props.match;
+        let {match} = this.props;
 
         return (
             <div >
@@ -18,9 +17,11 @@ class Category extends React.Component {
 
                 <Route path={`${match.path}/:name`}
                     render={({ match }) => (
-                       
-                        <div>{ console.log(match)}
-                             <h3> {match.params.name} </h3></div>
+
+                        <div>
+                            {console.log(match)}
+                            <h3> {match.params.name} </h3>
+                        </div>
                     )}
                 />
 
