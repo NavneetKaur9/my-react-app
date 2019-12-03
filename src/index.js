@@ -10,19 +10,15 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import Category from './components/category';
 
 ReactDOM.render(
   <Router>
     <Switch>
-      <Route path="/users">
-        <Users />
-      </Route>
-      <Route path="/products">
-        <Products />
-      </Route>
-      <Route path="/">
-        <App />
-      </Route>
+      <Route path="/" component={App} exact/>
+      <Route path="/users" component={Users}/>
+      <Route path="/products" component={Products}/>
+      <Route path ="/category" component={Category}/>
     </Switch>
   </Router>
   , document.getElementById('root'));
