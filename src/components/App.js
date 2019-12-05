@@ -1,34 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
-function App() {
-    // Declare a new state variable, which we'll call "count"
-    const [count, setCount] = useState(0);
-    // Declare multiple state variables!
-    const [age, setAge] = useState(42);
-    const [fruit, setFruit] = useState('banana');
-    const [todos, setTodos] = useState([{ text: 'Learn Hooks' }, { text: 'Create custom Hooks' }]);
+// Context lets us pass a value deep into the component tree
+// without explicitly threading it through every component.
+// Create a context for the current theme (with "light" as the default).
+const ThemeContext = React.createContext('light');
+console.log("ThemeContext: ", ThemeContext);
 
-    // Similar to componentDidMount and componentDidUpdate:
-    useEffect(() => {
-        // Update the document title using the browser API
-        document.title = `You clicked ${count} times`;
-        //  If your effect returns a function, React will run it when it is time to clean up.
-        return () => console.log("after effect", count);
-    });
+class App extends React.Component {
+    render() {
+        // Use a Provider to pass the current theme to the tree below.
+        // Any component can read it, no matter how deep it is.
+        // In this example, we're passing "dark" as the current value.
+        let x = {type:"dark"};
+        return (
+            <ThemeContext.Provider  value={x}>
+                <Toolbar />
+            </ThemeContext.Provider>
+        );
+    }
+}
 
+// A component in the middle doesn't have to
+// pass the theme down explicitly anymore.
+function Toolbar(props) {
     return (
         <div>
-            <p>You clicked {count} times</p>
-            <button onClick={() => setCount(count + 1)}>
-                Click me
-            </button>
-            <div> Age: {age} </div>
-            <div> Fruit: {fruit} </div>
-            <div>
-                <h3> Todos:</h3> {todos.map(todo => (<div >{todo.text}</div>))} </div>
-            <hr />
+            <ThemedButton />
         </div>
     );
+}
+
+class ThemedButton extends React.Component {
+    // Assign a contextType to read the current theme context.
+    // React will find the closest theme Provider above and use its value.
+    // In this example, the current theme is "dark".
+    static contextType = ThemeContext;
+    render() {
+        console.log("ThemeContext>>>>>",ThemeContext);
+        console.log("this.context", this)
+        return <Button theme={this.context} />;
+    }
+}
+
+class Button extends React.Component {
+    render() {
+        return (
+            <div>
+                {console.log(this.props.theme)}
+                Theme type: {this.props.theme.type}
+                <ThemeContext.Consumer>
+                    {value => <div>render something</div>}
+                </ThemeContext.Consumer>
+            </div>
+        )
+    }
 }
 
 export default App;
