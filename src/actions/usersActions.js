@@ -23,11 +23,11 @@ export function fetchUsers() {
     }
 }
 
-export function setUserDetail(user){
-    return dispatch => {
-        dispatch({
-            type: actionType.SET_USER_DETAIL,
-            payload: user
-        })
-    }
-}
+// export function setUserDetail(user){
+//     return dispatch => {
+//         dispatch({
+//             type: actionType.SET_USER_DETAIL,
+//             payload: user
+//         })
+//     }
+// }

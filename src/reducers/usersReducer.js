@@ -1,22 +1,14 @@
 import initialState from "./initialState";
-import { FETCH_USERS, SET_USER_DETAIL } from "../actions/actionTypes";
+import { FETCH_USERS } from "../actions/actionTypes";
 
-export default function users(state=initialState,action){
+export default function users(state = initialState, action) {
 
-    switch(action.type){
+    switch (action.type) {
 
         case FETCH_USERS:
-            
             return {
                 ...state,
-                apiUserData: action.payload
-            }
-        
-        case SET_USER_DETAIL:
-
-            return {
-                ...state,
-                userDetail: action.payload
+                data: action.payload
             }
 
         default:

@@ -1,6 +1,5 @@
 let initialState ={
-    apiUserData: [],
-    userDetail: null
+    data: []
 };
 
 export default initialState;

@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import * as UsersActions from '../actions/usersActions';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 
 class User extends React.Component {
 
@@ -15,48 +17,59 @@ class User extends React.Component {
         this.props.userActions.setUserDetail(user);
     }
 
+    onAdd = () => {
+        // this.props.
+    }
+
     render() {
         console.log(this.props);
-        let displayUsers = this.props.apiUserData.map(user => {
-
+        let displayUsers = this.props.userState.data.map(user => {
             return (
-
-                // <Card
-                //     key={user.id}
-                //     className={classNames("user user-card", {
-                //         'selected': user.id === (this.props.userDetail && this.props.userDetail.id)
-                //     })}
-                //     onClick={() => this.showUserDetail(user)}>
-                //     <Card.Body>
-                //         <Card.Title className="user-card-name">{user.name} ({user.username})</Card.Title>
-                //         <Card.Subtitle className="mb-2 user-card-email">{user.email}</Card.Subtitle>
-                //         <Card.Text>
-                //             {user.phone}
-                //         </Card.Text>
-                //         <Card.Link className="user-card-website" href={user.website}>{user.website}</Card.Link>
-                //     </Card.Body>
-                <div className="">
-                    Name: {user.name} ({user.username})
-                        <br />
-                    Email: {user.email}
-                    <br />
-                    Phone:  {user.phone}
-                    <br />
-                    website: {user.website}
-                    <br />
-                    <Link to={`/user/${user.id}`}>See details</Link>
-                    {/* <Link to="/usersDetails">See details</Link> */}
-
-                    <hr />
-                </div>
-                // </Card>
+                <tr key={user.id}>
+                    <td>{user.name}</td>
+                    <td>{user.username}</td>
+                    <td>{user.email}</td>
+                    <td>{user.phone}</td>
+                    <td>{user.website}</td>
+                    <td>{user.address.street},{user.address.suite},{user.address.city}</td>
+                    <td>
+                        <Link to={
+                            {
+                                pathName: `/navneet/${user.id}`,
+                                state: this.props.userState
+                            }
+                        }>
+                            <Button variant="info">Edit</Button>
+                        </Link>
+                    </td>
+                    <td>
+                        <Button variant="danger">Delete</Button>
+                    </td>
+                </tr>
             );
         });
 
         return (
-            <div className="App-container">
-                {displayUsers}
-            </div>
+            <>
+                <Button variant="primary" onClick={this.onAdd}>+ Add User</Button>
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Website</th>
+                            <th>Address</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {displayUsers}
+                    </tbody>
+                </Table>
+            </>
         );
     }
 }
@@ -68,9 +81,9 @@ User.propTypes = {
 };
 
 function mapStateToProps(state) {
+    console.log("state in Users Component", state);
     return {
-        apiUserData: state.users.apiUserData,
-        userDetail: state.users.userDetail
+        userState: state.users
     }
 }
 
