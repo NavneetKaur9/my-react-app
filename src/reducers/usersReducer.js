@@ -1,11 +1,11 @@
 import initialState from "./initialState";
-import { FETCH_USERS } from "../actions/actionTypes";
+import { SET_USERS_LIST } from "../actions/actionTypes";
 
 export default function users(state = initialState, action) {
 
     switch (action.type) {
 
-        case FETCH_USERS:
+        case SET_USERS_LIST:
             return {
                 ...state,
                 data: action.payload

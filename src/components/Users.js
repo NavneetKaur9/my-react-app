@@ -6,23 +6,29 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 
 class User extends React.Component {
 
     componentDidMount() {
-        this.props.userActions.fetchUsers();
+        if (localStorage.getItem("usersList")) {
+            this.props.userActions.setUsersList(JSON.parse(localStorage.getItem("usersList")));
+        } {
+            this.props.userActions.fetchUsers();
+        }
     }
 
     showUserDetail = (user) => {
         this.props.userActions.setUserDetail(user);
     }
 
-    onAdd = () => {
-        // this.props.
+    onDelete = (id) => {
+        let filteredUserList = this.props.userState.data.filter((user) => user.id != id);
+        this.props.userActions.setUsersList(filteredUserList);
     }
 
     render() {
-        console.log(this.props);
+        let { match } = this.props;
         let displayUsers = this.props.userState.data.map(user => {
             return (
                 <tr key={user.id}>
@@ -32,18 +38,14 @@ class User extends React.Component {
                     <td>{user.phone}</td>
                     <td>{user.website}</td>
                     <td>{user.address.street},{user.address.suite},{user.address.city}</td>
+                    <td>{user.company.name}</td>
                     <td>
-                        <Link to={
-                            {
-                                pathName: `/navneet/${user.id}`,
-                                state: this.props.userState
-                            }
-                        }>
+                        <Link to={`${match.url}/edit/${user.id}`} >
                             <Button variant="info">Edit</Button>
                         </Link>
                     </td>
                     <td>
-                        <Button variant="danger">Delete</Button>
+                        <Button variant="danger" onClick={this.onDelete.bind(this, user.id)}>Delete</Button>
                     </td>
                 </tr>
             );
@@ -51,7 +53,12 @@ class User extends React.Component {
 
         return (
             <>
-                <Button variant="primary" onClick={this.onAdd}>+ Add User</Button>
+                <ButtonToolbar>
+                    <Link to={`${match.url}/add`}>
+                        <Button variant="primary">+ Add User</Button>
+                    </Link>
+                </ButtonToolbar>
+
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -61,6 +68,7 @@ class User extends React.Component {
                             <th>Phone</th>
                             <th>Website</th>
                             <th>Address</th>
+                            <th>Company</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -81,7 +89,6 @@ User.propTypes = {
 };
 
 function mapStateToProps(state) {
-    console.log("state in Users Component", state);
     return {
         userState: state.users
     }

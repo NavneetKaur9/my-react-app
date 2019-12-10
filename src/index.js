@@ -9,13 +9,13 @@ import users from './reducers/usersReducer';
 import { Route, Router, Switch } from 'react-router';
 import Users from './components/Users';
 import { createBrowserHistory } from 'history';
-import UserDetail from './components/UserDetail';
+import AddEditUser from './components/AddEditUser.js';
 import './index.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 
 const rootReducer = combineReducers({ users });
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({trace:true}) || compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true }) || compose;
 const store = createStore(
     rootReducer,
     composeEnhancers(applyMiddleware(thunk))
@@ -26,7 +26,8 @@ ReactDOM.render(
         <Container>
             <Router history={createBrowserHistory()}>
                 <Switch>
-                    <Route path="/user/:id" component={UserDetail} />
+                    <Route path="/users/edit/:id" component={AddEditUser} />
+                    <Route path="/users/add" component={AddEditUser}/>
                     <Route path="/users" component={Users} />
                     <Route path="/" component={App} />
                 </Switch>

@@ -10,11 +10,8 @@ export function fetchUsers() {
                 }
 
                 response.json().then(responseBody => {
-
-                    dispatch({
-                        type: actionType.FETCH_USERS,
-                        payload: responseBody
-                    });
+                    dispatch(setUsersList(responseBody));
+                    localStorage.setItem("usersList",JSON.stringify(responseBody));
                 });
             })
             .catch(err => {
@@ -23,11 +20,11 @@ export function fetchUsers() {
     }
 }
 
-// export function setUserDetail(user){
-//     return dispatch => {
-//         dispatch({
-//             type: actionType.SET_USER_DETAIL,
-//             payload: user
-//         })
-//     }
-// }
+export function setUsersList(userList) {
+    return dispatch => {
+        dispatch({
+            type: actionType.SET_USERS_LIST,
+            payload: userList
+        })
+    }
+}
