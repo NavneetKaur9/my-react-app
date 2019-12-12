@@ -13,7 +13,7 @@ class User extends React.Component {
     componentDidMount() {
         if (localStorage.getItem("usersList")) {
             this.props.userActions.setUsersList(JSON.parse(localStorage.getItem("usersList")));
-        } {
+        } else {
             this.props.userActions.fetchUsers();
         }
     }
@@ -23,7 +23,7 @@ class User extends React.Component {
     }
 
     onDelete = (id) => {
-        let filteredUserList = this.props.userState.data.filter((user) => user.id != id);
+        let filteredUserList = this.props.userState.data.filter((user) => user.id !== id);
         this.props.userActions.setUsersList(filteredUserList);
     }
 

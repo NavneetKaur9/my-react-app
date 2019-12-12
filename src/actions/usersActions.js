@@ -11,7 +11,6 @@ export function fetchUsers() {
 
                 response.json().then(responseBody => {
                     dispatch(setUsersList(responseBody));
-                    localStorage.setItem("usersList",JSON.stringify(responseBody));
                 });
             })
             .catch(err => {
@@ -25,6 +24,7 @@ export function setUsersList(userList) {
         dispatch({
             type: actionType.SET_USERS_LIST,
             payload: userList
-        })
+        });
+        localStorage.setItem("usersList",JSON.stringify(userList));
     }
 }
